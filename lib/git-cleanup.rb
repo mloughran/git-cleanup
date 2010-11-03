@@ -9,6 +9,8 @@ class GitCleanup
     
     master = repo.heads.find { |h| h.name == 'master' }
 
+    self.prune(repo)
+
     local_branches = repo.branches.map { |b| b.name }
 
     remote_branches = Branch.remote(repo).select { |b| b.commit.lazy_source }
@@ -52,6 +54,16 @@ class GitCleanup
             branch.delete(local_branches)
           end
         end
+      end
+    end
+  end
+
+  # Prunes branches that have already been removed on origin
+  def self.prune(repo)
+    list = repo.git.native(:remote, {}, 'prune', '-n', "origin")
+    if list.any?
+      Helper.boolean "Planning to prune the following. Ok?\n#{list}" do
+        repo.git.native(:remote, {}, 'prune', "origin")
       end
     end
   end
