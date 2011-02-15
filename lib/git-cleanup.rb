@@ -20,11 +20,14 @@ class GitCleanup
 
       # Diff of commit in branch which is not in master
       diff = branch.diff(master)
+      commits = branch.commits(master)
 
       msg = "Branch #{branch.to_s} (#{index+1}/#{remote_branches.size})"
       puts
       puts msg
       puts '-' * msg.size
+      puts "Latest commits:\n"
+      puts commits
 
       if diff.empty?
         last_commit = branch.commit

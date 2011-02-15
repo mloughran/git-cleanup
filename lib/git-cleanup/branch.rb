@@ -21,6 +21,10 @@ class GitCleanup
     def diff(ref)
       @repo.git.native(:diff, {}, "#{ref.commit.sha}...#{@ref.commit.sha}")
     end
+
+    def commits(ref)
+      @repo.git.native(:log, {}, "#{ref.commit.sha}..#{@ref.commit.sha}")
+    end
   
     def commit
       @ref.commit
