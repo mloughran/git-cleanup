@@ -16,6 +16,8 @@ class GitCleanup
     remote_branches = Branch.remote(repo).select { |b| b.commit.lazy_source }
 
     remote_branches.sort.each_with_index do |branch, index|
+      next if branch.name == 'master'
+
       # Diff of commit in branch which is not in master
       diff = branch.diff(master)
 
