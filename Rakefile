@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "git-cleanup"
-    gem.summary = %Q{Simplify cleaning up old git branches}
-    gem.description = %Q{Simplify cleaning up old git branches}
+    gem.summary = %Q{Command line tool for interactively cleaning up old git branches (remotely and locally)}
+    gem.description = %Q{Command line tool for interactively cleaning up old git branches (remotely and locally)}
     gem.email = "me@mloughran.com"
     gem.homepage = "http://github.com/mloughran/git-cleanup"
     gem.authors = ["Martyn Loughran"]
