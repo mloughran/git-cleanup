@@ -9,7 +9,7 @@ class GitCleanup
     
     master = repo.heads.find { |h| h.name == 'master' }
 
-    self.prune(repo)
+    # self.prune(repo)
 
     local_branches = repo.branches.map { |b| b.name }
 
