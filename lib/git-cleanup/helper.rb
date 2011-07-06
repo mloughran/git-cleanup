@@ -1,6 +1,6 @@
 class GitCleanup
   module Helper
-    def self.boolean(question)
+    def self.boolean(question, &block)
       puts "#{question} (y/n)"
       answer = STDIN.gets.chomp
       if answer == 'y'
@@ -8,7 +8,7 @@ class GitCleanup
       elsif answer == 'n'
         return false
       else
-        boolean(question)
+        boolean(question, &block)
       end
     end
   end
