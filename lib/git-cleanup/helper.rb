@@ -1,7 +1,8 @@
 class GitCleanup
   module Helper
     def self.boolean(question, &block)
-      puts "#{question} (y/n)"
+      Formatador.display_line ""
+      Formatador.display("#{question} (y/n)[/] ")
       answer = STDIN.gets.chomp
       if answer == 'y'
         yield

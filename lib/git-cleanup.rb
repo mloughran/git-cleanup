@@ -1,15 +1,22 @@
 require 'grit'
 require 'tempfile'
-
+require 'formatador'
 # Grit.debug = true
 
+# No default indent
+class Formatador
+  def initialize
+    @indent = 0
+  end
+end
+
 class GitCleanup
-  def self.run
+  def self.run(options = {})
     repo = Grit::Repo.new(Dir.pwd)
     
     master = repo.heads.find { |h| h.name == 'master' }
 
-    # self.prune(repo)
+    self.prune(repo)
 
     local_branches = repo.branches.map { |b| b.name }
 
@@ -23,28 +30,38 @@ class GitCleanup
       commits = branch.commits(master)
 
       msg = "Branch #{branch.to_s} (#{index+1}/#{remote_branches.size})"
-      puts
-      puts msg
-      puts '-' * msg.size
-      puts "Latest commits:\n"
-      puts commits
+      Formatador.display_line
+
+      Formatador.display_line("[bold][green]#{msg}[/]")
+      Formatador.display_line "[bold][green]" + '-' * msg.size + "[/]"
+      Formatador.display_line "Latest commits:\n"
+
+      Formatador.indent {
+        Formatador.display_lines commits.split("\n")
+      }
 
       if diff.empty?
         last_commit = branch.commit
         if last_commit
-          puts "Last commit:"
-          puts "Author: #{last_commit.author}"
-          puts "Date:   #{last_commit.committed_date}"
-          puts "SHA:    #{last_commit.sha}"
-          puts "#{last_commit.message}"
-          puts
+          Formatador.display_line "Last commit:"
+          Formatador.display_line "Author: #{last_commit.author}"
+          Formatador.display_line "Date:   #{last_commit.committed_date}"
+          Formatador.display_line "SHA:    #{last_commit.sha}"
+          Formatador.display_line "#{last_commit.message}"
+          Formatador.display_line
         end
 
         Helper.boolean 'All commits merged. Do you want the branch deleted?' do
           branch.delete(local_branches)
         end
       else
-        Helper.boolean "Branch not merged. Do you want to see a diff?" do
+
+        if options[:skip_unmerged]
+          Formatador.display_line "[bold][green][INFO][/] Branch not merged. Skipped[/]"
+          next
+        end
+
+        Helper.boolean "[bold][blue][QUESTION][/] Branch not merged. Do you want to see a diff?" do
           Tempfile.open('diff') do |tempfile|
             tempfile << diff
             tempfile.flush
@@ -52,7 +69,7 @@ class GitCleanup
             if ENV["GIT_EDITOR"]
               `#{ENV["GIT_EDITOR"]} #{tempfile.path}`
             else
-              puts diff
+              Formatador.display_line diff
             end
           end
           Helper.boolean "Do you want the branch deleted?" do
@@ -66,7 +83,7 @@ class GitCleanup
   # Prunes branches that have already been removed on origin
   def self.prune(repo)
     list = repo.git.native(:remote, {}, 'prune', '-n', "origin")
-    if list.any?
+    if !list.empty?
       Helper.boolean "Planning to prune the following. Ok?\n#{list}" do
         repo.git.native(:remote, {}, 'prune', "origin")
       end
