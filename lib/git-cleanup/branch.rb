@@ -31,15 +31,15 @@ class GitCleanup
     end
 
     def delete(local_branches = nil)
-      Formatador.display_line('[blue]Deleting...[/]')
+      Formatador.display('[red]Deleting...[/]')
       @repo.git.native(:push, {}, @remote, ":#{@name}")
-      Formatador.display_line('[blue]Done[/]')
+      Formatador.display_line('[red]done[/]')
 
       if local_branches && local_branches.include?(name)
         Helper.boolean "There is also a local branch called #{name}. Would you like to delete that too?" do
-        Formatador.display_line('[blue]Deleting...[/]')
+        Formatador.display('[red]Deleting...[/]')
         @repo.git.native(:branch, {}, '-d', name)
-        Formatador.display_line('[blue]Done[/]')
+        Formatador.display_line('[red]done[/]')
         end
       end
     end
