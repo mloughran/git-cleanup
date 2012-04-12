@@ -32,10 +32,13 @@ class GitCleanup
       msg = "Branch #{branch.to_s} (#{index+1}/#{remote_branches.size})"
       Formatador.display_line
 
-      Formatador.display_line("[green]#{msg}[/]")
-      Formatador.display_line '-' * msg.size
+      Formatador.display_line("[bold][green]#{msg}[/]")
+      Formatador.display_line "[bold][green]" + '-' * msg.size + "[/]"
       Formatador.display_line "Latest commits:\n"
-      Formatador.display_lines commits.split("\n")
+
+      Formatador.indent {
+        Formatador.display_lines commits.split("\n")
+      }
 
       if diff.empty?
         last_commit = branch.commit
@@ -54,11 +57,11 @@ class GitCleanup
       else
 
         if options[:skip_unmerged]
-          Formatador.display_line "[yellow]Branch not merged. Skipped[/]"
+          Formatador.display_line "[bold][green][INFO][/] Branch not merged. Skipped[/]"
           next
         end
 
-        Helper.boolean "Branch not merged. Do you want to see a diff?" do
+        Helper.boolean "[bold][blue][QUESTION][/] Branch not merged. Do you want to see a diff?" do
           Tempfile.open('diff') do |tempfile|
             tempfile << diff
             tempfile.flush
