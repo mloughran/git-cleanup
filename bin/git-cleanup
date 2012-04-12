@@ -1,6 +1,11 @@
 require 'git-cleanup'
 require 'optparse'
 
+trap("INT") {
+  Formatador.redisplay("[bold][yellow]No more cleanup[/]\n")
+  exit(1)
+}
+
 conf = {
 	:skip_unmerged => false
 }
