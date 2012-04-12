@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{Command line tool for interactively cleaning up old git branches (remotely and locally)}
   
   s.add_dependency 'grit', '~> 2.2.0'
+  s.add_dependency 'formatador', '~> 0.2.1'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
