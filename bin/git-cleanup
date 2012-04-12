@@ -1,3 +1,26 @@
 require 'git-cleanup'
+require 'optparse'
 
-GitCleanup.run
+conf = {
+	:skip_unmerged => false
+}
+
+opts = OptionParser.new do |opts|
+	opts.banner = "Usage: git-cleanup [OPTIONS] -- ... commands"
+	opts.on("-s", "--skip-unmerged", "Unmerge branches will be skipped") do |u|
+		conf[:skip_unmerged] = true
+	end
+	opts.on("-h", "--help", "Shows this help") do
+    puts opts
+    exit
+  end
+end
+
+begin
+  opts.parse!(ARGV)
+rescue OptionParser::ParseError => ex
+  $stderr.puts ex
+  exit 1
+end
+
+GitCleanup.run(conf)

@@ -11,7 +11,7 @@ class Formatador
 end
 
 class GitCleanup
-  def self.run
+  def self.run(options = {})
     repo = Grit::Repo.new(Dir.pwd)
     
     master = repo.heads.find { |h| h.name == 'master' }
@@ -52,6 +52,12 @@ class GitCleanup
           branch.delete(local_branches)
         end
       else
+
+        if options[:skip_unmerged]
+          Formatador.display_line "[yellow]Branch not merged. Skipped[/]"
+          next
+        end
+
         Helper.boolean "Branch not merged. Do you want to see a diff?" do
           Tempfile.open('diff') do |tempfile|
             tempfile << diff
