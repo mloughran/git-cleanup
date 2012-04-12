@@ -34,36 +34,35 @@ class GitCleanup
 
       Formatador.display_line("[bold][green]#{msg}[/]")
       Formatador.display_line "[bold][green]" + '-' * msg.size + "[/]"
-      Formatador.display_line "Latest commits:\n"
-
-      Formatador.indent {
-        Formatador.display_lines commits.split("\n")
-      }
 
       if diff.empty?
+        Formatador.display_line "Branch merged. Last commit on branch:"
         last_commit = branch.commit
         if last_commit
           Formatador.indent {
-            Formatador.display_line "Last commit:"
             Formatador.display_line "Author: #{last_commit.author}"
             Formatador.display_line "Date:   #{last_commit.committed_date}"
             Formatador.display_line "SHA:    #{last_commit.sha}"
             Formatador.display_line "#{last_commit.message}"
-            Formatador.display_line
           }
         end
 
-        Helper.boolean 'All commits merged. Do you want the branch deleted?' do
+        Helper.boolean 'Do you want the branch deleted?' do
           branch.delete(local_branches)
         end
       else
-
         if options[:skip_unmerged]
           Helper.info "Branch not merged. Skipped"
           next
         end
 
-        Helper.boolean "Branch not merged. Do you want to see a diff?" do
+        Formatador.display_line "Branch not merged. Commits on branch:"
+
+        Formatador.indent {
+          Formatador.display_lines commits.split("\n")
+        }
+
+        Helper.boolean "Do you want to see a diff?" do
           Tempfile.open('diff') do |tempfile|
             tempfile << diff
             tempfile.flush
