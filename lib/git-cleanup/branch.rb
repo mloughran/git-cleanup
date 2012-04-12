@@ -11,7 +11,7 @@ class GitCleanup
     def initialize(repo, ref)
       @repo = repo
       @ref = ref
-      @remote, @name = ref.name.split('/')
+      @remote, @name = ref.name.split('/', 2)
     end
   
     def to_s
