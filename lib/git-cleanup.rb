@@ -94,3 +94,4 @@ end
 
 require 'git-cleanup/branch'
 require 'git-cleanup/helper'
+require 'git-cleanup/version'

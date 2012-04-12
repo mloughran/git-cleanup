@@ -15,6 +15,10 @@ opts = OptionParser.new do |opts|
 	opts.on("-s", "--skip-unmerged", "Unmerge branches will be skipped") do |u|
 		conf[:skip_unmerged] = true
 	end
+  opts.on("-v", "--version", "Shows version") do
+    puts GitCleanup::VERSION
+    exit
+  end
 	opts.on("-h", "--help", "Shows this help") do
     puts opts
     exit
