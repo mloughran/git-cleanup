@@ -8,9 +8,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Martyn Loughran"]
   s.email       = ["me@mloughran.com"]
-  s.homepage    = "http://github.com/mloughran/git-cleanup"
-  s.summary     = %q{Command line tool for interactively cleaning up old git branches (remotely and locally)}
-  s.description = %q{Command line tool for interactively cleaning up old git branches (remotely and locally)}
+  s.homepage    = "http://mloughran.github.com/git-cleanup/"
+  s.summary     = %q{A simple interactive command line tool to help you cleanup your git branch detritus}
+  s.description = %q{A simple interactive command line tool to help you cleanup your git branch detritus}
   
   s.add_dependency 'grit', '~> 2.2.0'
   s.add_dependency 'formatador', '~> 0.2.1'
