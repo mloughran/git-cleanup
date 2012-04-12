@@ -12,7 +12,7 @@ conf = {
 
 opts = OptionParser.new do |opts|
 	opts.banner = "Usage: git-cleanup [OPTIONS] -- ... commands"
-	opts.on("-s", "--skip-unmerged", "Unmerge branches will be skipped") do |u|
+	opts.on("-s", "--skip-unmerged", "Unmerged branches will be skipped") do |u|
 		conf[:skip_unmerged] = true
 	end
   opts.on("-v", "--version", "Shows version") do
