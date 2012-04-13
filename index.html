@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>git-cleanup by mloughran</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>git-cleanup</h1>
+        <p>A simple interactive command line tool to help you cleanup your git branch detritus.</p>
+        <p class="view"><a href="https://github.com/mloughran/git-cleanup">View the Project on GitHub <small>mloughran/git-cleanup</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mloughran/git-cleanup/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mloughran/git-cleanup/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mloughran/git-cleanup">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This is what git-cleanup does:</p>
+
+<ol>
+<li>Iterates over all remote branches (assumes origin), starting with the newest. For each branch:</li>
+<li>If the branch has been merged into master it offers to delete it, first remotely then locally.</li>
+<li>If the branch has not been merged it shows you all the un-merged commits, and offers to show you a diff (in your <code>GIT_EDITOR</code>). This makes it easy to determine whether the branch should be removed or not.<br>
+ Once you have viewed the diff you will be asked whether you wish to delete the branch as before.</li>
+</ol><p><strong>Every destructive operation is interactive</strong> - nothing unexpected will happen to your repo. It's perfectly fine to <code>Ctrl-C</code> at any time if you get bored of deleting branches and want to do some real work.</p>
+
+<h2>Usage</h2>
+
+<p>Install the gem</p>
+
+<pre><code>$ gem install git-cleanup
+</code></pre>
+
+<p>Inside a git repo, just run git-cleanup</p>
+
+<pre><code>$ git-cleanup
+</code></pre>
+
+<p>Use <code>--skip-unmerged</code> to ignore un-merged branches</p>
+
+<pre><code>$ git-cleanup --skip-unmerged
+</code></pre>
+
+<p>Be careful, if you delete a critical branch it's not my fault. Piping in <code>yes</code> is a bad idea.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mloughran">mloughran</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-519533-8");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
