@@ -15,6 +15,9 @@ opts = OptionParser.new do |opts|
 	opts.on("-s", "--skip-unmerged", "Unmerged branches will be skipped") do |u|
 		conf[:skip_unmerged] = true
 	end
+	opts.on("-o","--only FILTER", "Only branches that match FILTER will be included") do |only_filter|
+		conf[:only_filter] = only_filter
+	end
   opts.on("-v", "--version", "Shows version") do
     puts GitCleanup::VERSION
     exit

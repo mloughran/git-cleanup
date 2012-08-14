@@ -24,6 +24,7 @@ class GitCleanup
 
     remote_branches.sort.reverse.each_with_index do |branch, index|
       next if branch.name == 'master'
+      next if options[:only_filter] and !branch.name.match(options[:only_filter])
 
       # Diff of commit in branch which is not in master
       diff = branch.diff(master)
