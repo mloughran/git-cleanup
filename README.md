@@ -24,6 +24,10 @@ Inside a git repo, just run git-cleanup
 Use `--skip-unmerged` to ignore un-merged branches
 
     $ git-cleanup --skip-unmerged
+    
+Use `--only` to only consider branch names that have this substring
+
+    $ git-cleanup --only myname
 
 Be careful, if you delete a critical branch it's not my fault. Piping in `yes` is a bad idea.
 
