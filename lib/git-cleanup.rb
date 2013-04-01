@@ -26,15 +26,21 @@ class GitCleanup
       next if branch.name == 'master'
       next if options[:only_filter] and !branch.name.match(options[:only_filter])
 
-      # Diff of commit in branch which is not in master
-      diff = branch.diff(master)
-      commits = branch.commits(master)
-
       msg = "Branch #{branch.to_s} (#{index+1}/#{remote_branches.size})"
       Formatador.display_line
 
       Formatador.display_line("[bold][green]#{msg}[/]")
       Formatador.display_line "[bold][green]" + '-' * msg.size + "[/]"
+
+      # Diff of commit in branch which is not in master
+      begin
+        diff = branch.diff(master)
+      rescue Grit::Git::GitTimeout => e
+        Formatador.display_line("[bold][red] There was an error generating the diff.[/]")
+        Formatador.display_line("[red]Message: #{e.message}")
+        Formatador.display_line("Skipped")
+        next
+      end
 
       if diff.empty?
         Formatador.display_line "[bold]Branch merged.[/] Last commit on branch:"
@@ -56,6 +62,8 @@ class GitCleanup
           Helper.info "[bold]Branch not merged.[/] Skipped"
           next
         end
+
+        commits = branch.commits(master)
 
         Formatador.display_line "[bold]Branch not merged.[/] Commits on branch:"
 
