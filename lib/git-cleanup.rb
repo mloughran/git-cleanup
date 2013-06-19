@@ -13,8 +13,15 @@ end
 class GitCleanup
   def self.run(options = {})
     repo = Grit::Repo.new(Dir.pwd)
+
+    master_branch_name = options[:master_branch] || 'master'
     
-    master = repo.heads.find { |h| h.name == 'master' }
+    master = repo.heads.find { |h| h.name == master_branch_name }
+
+    unless master
+      Formatador.display_line(%Q{[bold][red] Could not find branch "#{master_branch_name}". Try using "-m BRANCH" to specify the master branch.[/]})
+      exit
+    end
 
     self.prune(repo)
 
@@ -23,7 +30,7 @@ class GitCleanup
     remote_branches = Branch.remote(repo).select { |b| b.commit.lazy_source }
 
     remote_branches.sort.reverse.each_with_index do |branch, index|
-      next if branch.name == 'master'
+      next if branch.name == master_branch_name
       next if options[:only_filter] and !branch.name.match(options[:only_filter])
 
       msg = "Branch #{branch.to_s} (#{index+1}/#{remote_branches.size})"
