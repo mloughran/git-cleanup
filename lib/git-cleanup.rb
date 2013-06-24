@@ -12,7 +12,12 @@ end
 
 class GitCleanup
   def self.run(options = {})
-    repo = Grit::Repo.new(Dir.pwd)
+    begin
+      repo = Grit::Repo.new(Dir.pwd)
+    rescue Grit::InvalidGitRepositoryError
+      Formatador.display_line(%Q{[bold][red] Could not find git repository in "#{Dir.pwd}".[/]})
+      exit
+    end
 
     master_branch_name = options[:master_branch] || 'master'
     
