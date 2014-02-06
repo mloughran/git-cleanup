@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{A simple interactive command line tool to help you cleanup your git branch detritus}
   s.description = %q{A simple interactive command line tool to help you cleanup your git branch detritus}
   
-  s.add_dependency 'grit', '~> 2.2.0'
+  s.add_dependency 'grit', '~> 2.5.0'
   s.add_dependency 'formatador', '~> 0.2.1'
 
   s.files         = `git ls-files`.split("\n")
