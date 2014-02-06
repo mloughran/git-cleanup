@@ -1,3 +1,5 @@
+**NOTICE**: Please use Ruby 1.9.3 (this gem relies on grit which is now unmaintained, and has issues with newer Rubies). Volunteers sought for upgrade to [rugged](https://github.com/libgit2/rugged).
+
 # git-cleanup
 
 A simple interactive command line tool to help you cleanup your git branch detritus.
